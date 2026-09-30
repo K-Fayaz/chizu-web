@@ -6,6 +6,7 @@ export type UserDoc = {
   firstName: string | null;
   lastName: string | null;
   imageUrl: string | null;
+  dodoCustomerId: string | null;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -16,10 +17,13 @@ async function usersCollection() {
   const db = await getDb();
   const collection = db.collection<UserDoc>("users");
 
-  indexesEnsured ??= collection.createIndex(
-    { clerkUserId: 1 },
-    { unique: true },
-  );
+  indexesEnsured ??= Promise.all([
+    collection.createIndex({ clerkUserId: 1 }, { unique: true }),
+    collection.createIndex(
+      { dodoCustomerId: 1 },
+      { unique: true, sparse: true },
+    ),
+  ]);
   await indexesEnsured;
 
   return collection;
@@ -47,6 +51,7 @@ export async function upsertUserFromClerk(data: {
       },
       $setOnInsert: {
         clerkUserId: data.id,
+        dodoCustomerId: null,
         createdAt: now,
       },
     },
@@ -62,4 +67,26 @@ export async function deleteUserByClerkId(clerkUserId: string) {
 export async function getUserByClerkId(clerkUserId: string) {
   const users = await usersCollection();
   return users.findOne({ clerkUserId });
+}
+
+export async function getUserByDodoCustomerId(dodoCustomerId: string) {
+  const users = await usersCollection();
+  return users.findOne({ dodoCustomerId });
+}
+
+export async function setDodoCustomerId(
+  clerkUserId: string,
+  dodoCustomerId: string,
+) {
+  const users = await usersCollection();
+  const result = await users.updateOne(
+    { clerkUserId },
+    { $set: { dodoCustomerId, updatedAt: new Date() } },
+  );
+
+  if (result.matchedCount === 0) {
+    throw new Error(
+      `setDodoCustomerId: no user found for clerkUserId ${clerkUserId} — Clerk webhook may not have synced this user yet`,
+    );
+  }
 }

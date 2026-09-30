@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { Check } from "lucide-react";
-import { Logo } from "./Logo";
 import { AvatarGrid } from "./AvatarGrid";
+import { PricingCard } from "./PricingCard";
 
 const tiers = [
   {
-    price: "$4.99",
+    price: "$14.99",
     align: "items-start text-left",
     dotPosition: "left-0",
     dotSize: "h-4 w-4",
@@ -15,36 +14,18 @@ const tiers = [
     current: true,
   },
   {
-    price: "$9.99",
-    align: "items-center text-center",
-    dotPosition: "left-1/2 -translate-x-1/2",
-    dotSize: "h-2.5 w-2.5",
-    dotStyle: "bg-[#16140f]/15",
-    priceStyle: "text-[#16140f]/40",
-    caption: "AFTER 50 CUSTOMERS",
-  },
-  {
-    price: "$19.99",
-    extra: "+$10.00",
+    price: "$29",
     align: "items-end text-right",
     dotPosition: "right-0",
     dotSize: "h-2.5 w-2.5",
     dotStyle: "bg-[#16140f]/15",
     priceStyle: "text-[#16140f]/40",
-    caption: "AFTER 100 CUSTOMERS",
+    caption: "AFTER 50 CUSTOMERS",
   },
 ];
 
 const currentIndex = tiers.findIndex((tier) => tier.current);
 const progressWidth = `${(currentIndex / (tiers.length - 1)) * 100}%`;
-
-const perks = [
-  "Your $4.99/month rate locked in for life",
-  "Unlimited projects",
-  "All export options",
-  "Audio support",
-  "Free updates",
-];
 
 export function Pricing() {
   return (
@@ -76,18 +57,13 @@ export function Pricing() {
             ))}
           </div>
 
-          <div className="mt-6 grid grid-cols-3 gap-2">
+          <div className="mt-6 grid grid-cols-2 gap-2">
             {tiers.map((tier) => (
               <div key={tier.price} className={`flex flex-col ${tier.align}`}>
                 <span className="flex items-baseline gap-1.5">
                   <span className={`text-2xl font-bold tracking-tight sm:text-3xl ${tier.priceStyle}`}>
                     {tier.price}
                   </span>
-                  {tier.extra && (
-                    <span className="text-sm font-semibold text-brand">
-                      {tier.extra}
-                    </span>
-                  )}
                 </span>
                 <span className="mt-1 text-[11px] font-semibold tracking-[0.1em] text-[#16140f]/40">
                   {tier.caption}
@@ -103,48 +79,16 @@ export function Pricing() {
         </div>
 
         <div className="mx-auto mt-14 grid max-w-5xl gap-6 text-left lg:grid-cols-[1fr_1.3fr] lg:items-stretch">
-          <div className="h-full rounded-2xl border border-black/10 bg-white p-6 shadow-xl shadow-black/5">
-            <div className="flex items-center justify-between border-b border-black/5 pb-4">
-              <Logo />
-              <span className="text-xs text-[#16140f]/40">Desktop app</span>
-            </div>
-
-            <div className="mt-5 flex items-baseline gap-2">
-              <span className="text-4xl font-semibold tracking-tight text-[#16140f]">
-                $4.99
-              </span>
-              <span className="text-sm text-[#16140f]/50">/ month</span>
-            </div>
-
-            <p className="mt-3 text-xs font-medium text-brand">
-              Only 50 spots at this launch rate — $9.99/month once
-              they&apos;re gone. Your rate stays locked in for life either
-              way.
-            </p>
-
-            <ul className="mt-5 space-y-2.5">
-              {perks.map((perk) => (
-                <li
-                  key={perk}
-                  className="flex items-start gap-2 text-sm text-[#16140f]/70"
-                >
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-                  {perk}
-                </li>
-              ))}
-            </ul>
-
-            <Link
-              href="#get-mapwise"
-              className="mt-6 flex w-full items-center justify-center rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-dark"
-            >
-              Get MapWise — $4.99/mo
-            </Link>
-
-            <p className="mt-3 text-center text-xs text-[#16140f]/40">
-              Cancel anytime · Prices in USD
-            </p>
-          </div>
+          <PricingCard
+            cta={
+              <Link
+                href="#get-mapwise"
+                className="mt-6 flex w-full items-center justify-center rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-dark"
+              >
+                Get MapWise — $14.99/mo
+              </Link>
+            }
+          />
 
           <AvatarGrid />
         </div>
