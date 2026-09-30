@@ -24,7 +24,8 @@ export function CheckoutStatusBanner({
     return (
       <div className="mb-6 rounded-xl border border-brand/30 bg-brand/10 p-4 text-sm font-medium text-brand">
         🎉 You&apos;re in! You&apos;re one of the first {foundingLimit}{" "}
-        founding members — your $14.99/mo rate is locked in for life.
+        founding members — your $14.99/mo rate is locked in for as long as
+        you stay subscribed.
       </div>
     );
   }

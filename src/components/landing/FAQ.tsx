@@ -29,6 +29,11 @@ const faqs = [
     answer:
       "Yes. Videos you export with MapWise are yours to use however you like, including commercial projects.",
   },
+  {
+    question: "What if I cancel and want to come back later?",
+    answer:
+      "Your founding rate stays locked in for as long as your subscription stays active. If you cancel, your spot opens up for someone else — so if you resubscribe after the 50 founding spots are gone, you'll be on the standard rate like any new customer.",
+  },
 ];
 
 export function FAQ() {

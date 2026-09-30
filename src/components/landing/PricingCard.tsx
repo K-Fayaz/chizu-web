@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 import { Logo } from "./Logo";
 
 const perks = [
-  "Your $14.99/month rate locked in for life",
+  "Your $14.99/month rate, locked in for as long as you stay subscribed",
   "Unlimited projects",
   "All export options",
   "Audio support",
@@ -27,7 +27,8 @@ export function PricingCard({ cta }: { cta: ReactNode }) {
 
       <p className="mt-3 text-xs font-medium text-brand">
         Only 50 spots at this launch rate — $29/month once they&apos;re gone.
-        Your rate stays locked in for life either way.
+        Your rate stays locked in for as long as you keep your subscription
+        active.
       </p>
 
       <ul className="mt-5 space-y-2.5">
