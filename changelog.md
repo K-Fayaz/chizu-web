@@ -1,5 +1,22 @@
 # Changelog — app (engineering notes)
 
+## 2026-10-03 — Desktop licensing hardening (Phase 6)
+
+Follow-up to the entry below; resolves several of its deferred items.
+
+- **Desktop sessions expire after 90 days unused.** `touchActiveSessionByTokenHash` ignores sessions whose `lastSeenAt` is older than that (→ 401, mappy signs out and the user signs in again), and they drop off the Devices card. Mappy refreshes every few hours while running, so only machines left off or offline that long are affected.
+- **Request body cap on `/api/desktop/*`:** `readJsonObject` streams the body and stops past 4 KB, including when Content-Length is missing or wrong.
+- **License key hidden from the dashboard** (user decision, todo 6.4). Nothing grants access from Dodo license keys any more; showing a key that does nothing would confuse users. The `licenseKeys` collection and the `license_key.created` webhook sync stay, dormant, in case keys are needed again.
+- Deployment notes (env vars, key rotation, release builds) are now in `mappy/docs/licensing-operations.md`.
+
+### Status
+The desktop licensing plan (Phases 0–6) is **complete** apart from launch-time configuration and the final test pass. The editor walkthrough was deferred by choice (see mappy's changelog).
+
+### Still open
+- **Production domain: not bought yet** (as of 2026-10-03; todo 6.5). Once it is: set `NEXT_PUBLIC_APP_URL` to it, point the Clerk and Dodo webhooks at it, build mappy with the same address (`MAPPY_API_URL`), and set **`TRUSTED_IP_HEADER`** for the host (todo 6.12). Steps are in `mappy/docs/licensing-operations.md`.
+- Still low-risk and accepted: the rate limiter is in-memory per instance; device-code phishing is mitigated, not eliminated; `PricingCard` / `CheckoutStatusBanner` copy issues (pre-existing).
+- Untested: `/desktop/subscribed?status=failed`; part of the final full test pass (todo 6.6).
+
 ## 2026-10-03 — Desktop app (mappy) sign-in & licensing backend
 
 Connects the desktop app to accounts and subscriptions. Full design, decisions and progress: `mappy/.claude/plans/desktop-licensing-plan.md` and `desktop-licensing-todos.md`. Mappy's side is logged in `mappy/.development_logs/changelog.md`.
@@ -39,7 +56,7 @@ Connects the desktop app to accounts and subscriptions. Full design, decisions a
 Manual curl + browser run: start → pending → approve → token (single use) → license verifies with mappy's public key (kid, device binding, 7-day exp, `ent`), walkthrough flag round-trip, dashboard revoke → 401, rate limit trips. Later re-verified end-to-end from mappy (including `sign-out`).
 
 ### Not yet tested
-- `/desktop/subscribe` (unsubscribed state), `/desktop/subscribed?status=failed`, and a real desktop-started checkout → webhook → mappy unlock (todo 4.7 C — needs a second, unsubscribed account + ngrok).
+- `/desktop/subscribed?status=failed`. (The unsubscribed `/desktop/subscribe` page and a real desktop-started checkout → webhook → mappy unlock were verified on 2026-10-03.)
 
 ### Known issues / deferred (low risk)
 - **Set `TRUSTED_IP_HEADER` in production** (e.g. Vercel: `x-real-ip`). Without it every user shares one rate-limit bucket, so heavy legitimate traffic could hit 429s. (todo 6.12)

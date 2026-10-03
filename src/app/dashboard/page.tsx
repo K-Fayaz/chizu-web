@@ -2,7 +2,6 @@ import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { getActiveSubscriptionByClerkId } from "@/lib/db/collections/subscriptions";
-import { getLicenseKeyByClerkId } from "@/lib/db/collections/licenseKeys";
 import { PricingCard } from "@/components/landing/PricingCard";
 import { FOUNDING_MEMBER_LIMIT } from "@/lib/dodo/pricing";
 import { createBillingPortalSession, createCheckoutSession } from "./actions";
@@ -19,10 +18,7 @@ export default async function DashboardPage({
   const { status } = await searchParams;
   const checkoutStatus = status === "active" || status === "failed" ? status : undefined;
 
-  const [subscription, licenseKey] = await Promise.all([
-    getActiveSubscriptionByClerkId(userId),
-    getLicenseKeyByClerkId(userId),
-  ]);
+  const subscription = await getActiveSubscriptionByClerkId(userId);
 
   const name = [user?.firstName, user?.lastName].filter(Boolean).join(" ");
 
@@ -69,14 +65,6 @@ export default async function DashboardPage({
                 {subscription.cancelAtNextBillingDate &&
                   " (cancels at period end)"}
               </p>
-              {licenseKey && (
-                <p className="mt-2 text-sm text-[#16140f]/70">
-                  License key:{" "}
-                  <code className="rounded bg-[#16140f]/5 px-1.5 py-0.5">
-                    {licenseKey.key}
-                  </code>
-                </p>
-              )}
               <form action={createBillingPortalSession} className="mt-4">
                 <button
                   type="submit"

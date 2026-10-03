@@ -14,6 +14,16 @@ export type DesktopSessionDoc = {
   revokedAt: Date | null;
 };
 
+// A session nobody has used for this long stops working (a lost or
+// abandoned computer), and drops off the dashboard's device list. Mappy
+// refreshes every few hours while running, so only machines that have been
+// switched off or offline this long are affected -- they just sign in again.
+const SESSION_IDLE_EXPIRY_MS = 90 * 24 * 60 * 60 * 1000;
+
+function activeSince() {
+  return new Date(Date.now() - SESSION_IDLE_EXPIRY_MS);
+}
+
 let indexesEnsured: Promise<unknown> | undefined;
 
 async function desktopSessionsCollection() {
@@ -61,11 +71,12 @@ export async function upsertDesktopSession(data: {
   );
 }
 
-// Looks up a live session and bumps lastSeenAt in the same round trip.
+// Looks up a live (not revoked, not idle-expired) session and bumps
+// lastSeenAt in the same round trip.
 export async function touchActiveSessionByTokenHash(tokenHash: string) {
   const sessions = await desktopSessionsCollection();
   return sessions.findOneAndUpdate(
-    { tokenHash, revokedAt: null },
+    { tokenHash, revokedAt: null, lastSeenAt: { $gte: activeSince() } },
     { $set: { lastSeenAt: new Date() } },
     { returnDocument: "after" },
   );
@@ -83,7 +94,7 @@ export async function revokeSessionByTokenHash(tokenHash: string) {
 export async function listActiveSessionsByClerkId(clerkUserId: string) {
   const sessions = await desktopSessionsCollection();
   return sessions
-    .find({ clerkUserId, revokedAt: null })
+    .find({ clerkUserId, revokedAt: null, lastSeenAt: { $gte: activeSince() } })
     .sort({ lastSeenAt: -1 })
     .toArray();
 }
