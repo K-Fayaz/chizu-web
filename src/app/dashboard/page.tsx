@@ -7,6 +7,7 @@ import { PricingCard } from "@/components/landing/PricingCard";
 import { FOUNDING_MEMBER_LIMIT } from "@/lib/dodo/pricing";
 import { createBillingPortalSession, createCheckoutSession } from "./actions";
 import { CheckoutStatusBanner } from "./CheckoutStatusBanner";
+import { DevicesCard } from "./DevicesCard";
 
 export default async function DashboardPage({
   searchParams,
@@ -99,6 +100,10 @@ export default async function DashboardPage({
               }
             />
           )}
+        </div>
+
+        <div className="mt-6">
+          <DevicesCard clerkUserId={userId} />
         </div>
       </div>
     </div>

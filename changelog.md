@@ -1,5 +1,54 @@
 # Changelog — app (engineering notes)
 
+## 2026-10-03 — Desktop app (mappy) sign-in & licensing backend
+
+Connects the desktop app to accounts and subscriptions. Full design, decisions and progress: `mappy/.claude/plans/desktop-licensing-plan.md` and `desktop-licensing-todos.md`. Mappy's side is logged in `mappy/.development_logs/changelog.md`.
+
+### How it works
+- **Device-code login** (same pattern as smart-TV / GitHub CLI sign-in): mappy calls `connect/start`, opens the browser on `/desktop/connect?code=XXXX-XXXX`, the user approves while signed in with Clerk, mappy polls `connect/poll` and receives a session token once.
+- **Two credentials:** a long-lived, revocable **session token** (`mps_…`, stored server-side only as a SHA-256 hash) and a short-lived **signed license** (Ed25519 JWT, 7-day `exp`) that mappy verifies offline with an embedded public key.
+- **Dodo license keys are no longer used for access** — entitlement comes from `getActiveSubscriptionByClerkId()` (`active`/`past_due` → `ent: "full"`). The license-key code is left dormant (decision pending, todo 6.4).
+
+### Keys & config
+- Ed25519 key pair, kid `2026-10`. Private key (base64 PKCS#8 PEM) in `.env.local` as `DESKTOP_LICENSE_PRIVATE_KEY` + `DESKTOP_LICENSE_KID`; public half lives in `mappy/src-tauri/keys/`.
+- Added `jose` for signing.
+- New optional env `TRUSTED_IP_HEADER` (see Security).
+
+### Database
+- `desktopConnectCodes` — pending connect attempts; `userCode` + `deviceCodeHash` unique, TTL index on `expiresAt` (10 min). Reads also check `expiresAt` since the TTL sweep lags ~1 min. Approved → consumed is an atomic flip (single-use token handout).
+- `desktopSessions` — one row per device (doubles as the dashboard device list); `tokenHash` unique, `(clerkUserId, deviceId)` unique so reconnecting a machine replaces its session.
+- `users.walkthroughCompletedAt` (optional) + `setWalkthroughCompleted()`.
+
+### API (`src/app/api/desktop/`)
+- `POST connect/start`, `POST connect/poll` — unauthenticated, rate-limited.
+- `POST license`, `POST walkthrough-complete`, `POST sign-out` — Bearer session token (`authenticateDesktopRequest()` in `src/lib/desktop/auth.ts`). Clerk's middleware passes these through untouched (verified).
+- `license` revokes the session and returns 401 if the users doc is gone (Clerk user deleted).
+
+### Pages
+- `/desktop/connect` — shows the signed-in account, the requesting device and the code; "Connect this device" server action; "Switch account". A code approved by another account renders as expired.
+- `/desktop/subscribe` — `PricingCard` + checkout; already-subscribed users get a "return to MapWise" card.
+- `/desktop/subscribed` — Dodo return page (success / failed → retry / confirming).
+- `/dashboard` — new **Devices** card with per-device "Sign out" (revoke scoped to the owner).
+- Checkout refactor: internal `startCheckout(returnPath)` with a fixed union of return paths (no open redirect); new `createDesktopCheckoutSession`. The "create users doc if the Clerk webhook hasn't synced" logic moved to `src/lib/clerk/ensureUserDoc.ts` and is also run on desktop approval — otherwise the first license call would treat the user as deleted.
+
+### Security review fixes (same day)
+- Rate limiting no longer trusts client-writable `X-Forwarded-For`; client IP comes only from the header named in `TRUSTED_IP_HEADER` (unset → one shared bucket: stricter, never bypassable). Global caps: start 500 / 10 min, poll 3000 / min. Poll is limited per device code (40 / min) rather than per IP.
+- `/desktop/connect` now carries a device-code-phishing warning ("only continue if you just clicked Sign in…"), shows the request's age, and presents the device name as self-reported.
+
+### Tested
+Manual curl + browser run: start → pending → approve → token (single use) → license verifies with mappy's public key (kid, device binding, 7-day exp, `ent`), walkthrough flag round-trip, dashboard revoke → 401, rate limit trips. Later re-verified end-to-end from mappy (including `sign-out`).
+
+### Not yet tested
+- `/desktop/subscribe` (unsubscribed state), `/desktop/subscribed?status=failed`, and a real desktop-started checkout → webhook → mappy unlock (todo 4.7 C — needs a second, unsubscribed account + ngrok).
+
+### Known issues / deferred (low risk)
+- **Set `TRUSTED_IP_HEADER` in production** (e.g. Vercel: `x-real-ip`). Without it every user shares one rate-limit bucket, so heavy legitimate traffic could hit 429s. (todo 6.12)
+- **Rate limiter is in-memory, per instance.** Fine on a single instance; needs a shared store (e.g. Redis) if the app scales out.
+- **Desktop sessions never expire** — only revocation ends them. Plan: expire sessions unused for 90 days. (todo 6.8)
+- **No explicit request body size cap** on `/api/desktop/*` (hosting platforms usually cap this). (todo 6.11)
+- **Device-code phishing is inherent to this login pattern** — mitigated by the warning, request age and the Devices card, not eliminated. Worst case: someone shares one victim's subscription.
+- Pre-existing, not touched: `PricingCard` hard-codes $14.99 (wrong once founding slots run out), and `CheckoutStatusBanner` tells every subscriber they're a founding member. The desktop pages avoid the banner, and the subscribe button uses the real price.
+
 ## 2026-09-30 — User management & subscriptions
 
 ### Auth (Clerk)

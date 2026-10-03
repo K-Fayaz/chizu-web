@@ -1,48 +1,35 @@
 "use server";
 
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { dodo } from "@/lib/dodo/client";
 import { getCheckoutPlan } from "@/lib/dodo/pricing";
-import {
-  getUserByClerkId,
-  setDodoCustomerId,
-  upsertUserFromClerk,
-} from "@/lib/db/collections/users";
+import { ensureUserDoc } from "@/lib/clerk/ensureUserDoc";
+import { getUserByClerkId, setDodoCustomerId } from "@/lib/db/collections/users";
+import { revokeSessionForUser } from "@/lib/db/collections/desktopSessions";
 
 async function getOrCreateDodoCustomerId(clerkUserId: string) {
-  let userDoc = await getUserByClerkId(clerkUserId);
-  if (userDoc?.dodoCustomerId) {
+  const userDoc = await ensureUserDoc(clerkUserId);
+  if (userDoc.dodoCustomerId) {
     return userDoc.dodoCustomerId;
   }
 
-  const user = await currentUser();
-  const email = user?.primaryEmailAddress?.emailAddress;
+  const email = userDoc.email;
   if (!email) {
     throw new Error("No email on file for the current user");
   }
 
-  if (!userDoc) {
-    // The Clerk webhook may not have synced this user yet (delivery lag or
-    // misconfiguration) — self-heal so checkout isn't blocked on it.
-    await upsertUserFromClerk({
-      id: clerkUserId,
-      email,
-      firstName: user?.firstName ?? null,
-      lastName: user?.lastName ?? null,
-      imageUrl: user?.imageUrl ?? null,
-    });
-    userDoc = await getUserByClerkId(clerkUserId);
-  }
-
-  const name = [user?.firstName, user?.lastName].filter(Boolean).join(" ");
+  const name = [userDoc.firstName, userDoc.lastName].filter(Boolean).join(" ");
   const customer = await dodo.customers.create({ email, name: name || email });
 
   await setDodoCustomerId(clerkUserId, customer.customer_id);
   return customer.customer_id;
 }
 
-export async function createCheckoutSession() {
+// Fixed return paths only (never caller-supplied), so a checkout can't be
+// turned into an open redirect.
+async function startCheckout(returnPath: "/dashboard" | "/desktop/subscribed") {
   const { userId } = await auth.protect();
 
   const dodoCustomerId = await getOrCreateDodoCustomerId(userId);
@@ -51,7 +38,7 @@ export async function createCheckoutSession() {
   const session = await dodo.checkoutSessions.create({
     product_cart: [{ product_id: productId, quantity: 1 }],
     customer: { customer_id: dodoCustomerId },
-    return_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
+    return_url: `${process.env.NEXT_PUBLIC_APP_URL}${returnPath}`,
     metadata: { clerkUserId: userId, plan },
   });
 
@@ -60,6 +47,16 @@ export async function createCheckoutSession() {
   }
 
   redirect(session.checkout_url);
+}
+
+export async function createCheckoutSession() {
+  await startCheckout("/dashboard");
+}
+
+// Started from the desktop app's paywall — lands on a "return to MapWise"
+// page instead of the dashboard.
+export async function createDesktopCheckoutSession() {
+  await startCheckout("/desktop/subscribed");
 }
 
 export async function createBillingPortalSession() {
@@ -76,4 +73,13 @@ export async function createBillingPortalSession() {
   );
 
   redirect(session.link);
+}
+
+export async function revokeDesktopDevice(formData: FormData) {
+  const { userId } = await auth.protect();
+  const sessionId = formData.get("sessionId");
+  if (typeof sessionId === "string") {
+    await revokeSessionForUser(userId, sessionId);
+  }
+  revalidatePath("/dashboard");
 }

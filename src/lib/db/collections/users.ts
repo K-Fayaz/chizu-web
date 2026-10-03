@@ -7,6 +7,9 @@ export type UserDoc = {
   lastName: string | null;
   imageUrl: string | null;
   dodoCustomerId: string | null;
+  // Set once the desktop app's editor walkthrough is finished or skipped.
+  // Kept server-side so it doesn't replay on a second machine.
+  walkthroughCompletedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -89,4 +92,13 @@ export async function setDodoCustomerId(
       `setDodoCustomerId: no user found for clerkUserId ${clerkUserId} — Clerk webhook may not have synced this user yet`,
     );
   }
+}
+
+export async function setWalkthroughCompleted(clerkUserId: string) {
+  const users = await usersCollection();
+  const now = new Date();
+  await users.updateOne(
+    { clerkUserId, walkthroughCompletedAt: { $exists: false } },
+    { $set: { walkthroughCompletedAt: now, updatedAt: now } },
+  );
 }
