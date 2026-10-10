@@ -4,7 +4,7 @@ import { getUserByClerkId } from "@/lib/db/collections/users";
 import { authenticateDesktopRequest, unauthorized } from "@/lib/desktop/auth";
 import { signLicense } from "@/lib/desktop/license";
 
-// Mappy's refresh call: a freshly signed license for this device, plus the
+// The desktop app's refresh call: a freshly signed license for this device, plus the
 // profile and onboarding state it shows. Called on launch, every few hours,
 // and repeatedly while waiting for a checkout to complete.
 export async function POST(request: Request) {

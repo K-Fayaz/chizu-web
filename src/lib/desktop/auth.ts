@@ -1,7 +1,7 @@
 import { createHash, randomBytes, randomInt } from "node:crypto";
 import { touchActiveSessionByTokenHash } from "@/lib/db/collections/desktopSessions";
 
-// Desktop (mappy) requests authenticate with their own session token, not
+// Desktop app requests authenticate with their own session token, not
 // Clerk cookies -- the desktop app never holds a Clerk session.
 
 // No 0/O/1/I/L, so a code read off a screen can't be mistyped.

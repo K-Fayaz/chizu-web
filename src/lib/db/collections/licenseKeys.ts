@@ -3,7 +3,7 @@ import { getDb } from "@/lib/db/client";
 // Dormant: Dodo license keys are still synced here by the Dodo webhook
 // (license_key.created), but nothing grants access from them anymore and the
 // dashboard no longer shows them. Desktop access comes from signed licenses
-// tied to the subscription (src/lib/desktop/, mappy's licensing plan).
+// tied to the subscription (src/lib/desktop/, the desktop app's licensing plan).
 // Kept rather than deleted so the data is there if keys are ever needed again.
 import type { LicenseKeyStatus } from "dodopayments/resources/license-keys";
 

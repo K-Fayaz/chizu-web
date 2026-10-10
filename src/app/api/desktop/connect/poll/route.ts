@@ -7,7 +7,7 @@ import { generateSessionToken, hashSecret } from "@/lib/desktop/auth";
 import { rateLimit, tooManyRequests } from "@/lib/desktop/rateLimit";
 import { badRequest, readJsonObject, stringField } from "@/lib/desktop/request";
 
-// Step 2: mappy polls with its deviceCode until the user approves in the
+// Step 2: the desktop app polls with its deviceCode until the user approves in the
 // browser. The session token is handed out exactly once -- the code flips to
 // "consumed" atomically, and any later poll for it reads as expired.
 export async function POST(request: Request) {
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
   const deviceCodeHash = hashSecret(deviceCode);
 
   // Limited per code, not per IP: several people behind one office network
-  // signing in at once mustn't slow each other down. Mappy polls every 3s
+  // signing in at once mustn't slow each other down. The desktop app polls every 3s
   // (20/min); the rest is headroom for retries.
   const perCode = rateLimit(`connect-poll:${deviceCodeHash}`, 40, 60_000);
   if (!perCode.ok) return tooManyRequests(perCode.retryAfterSeconds);

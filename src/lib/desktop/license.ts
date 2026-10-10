@@ -2,9 +2,9 @@ import { randomUUID } from "node:crypto";
 import { importPKCS8, SignJWT, type CryptoKey } from "jose";
 import type { PlanTier } from "@/lib/db/collections/subscriptions";
 
-// Signed licenses mappy verifies offline with the public half of this key
+// Signed licenses the desktop app verifies offline with the public half of this key
 // (mappy/src-tauri/keys/license-public-<kid>.pem). exp is the hard ceiling of
-// the offline window: past 7 days without a refresh, mappy drops to
+// the offline window: past 7 days without a refresh, the desktop app drops to
 // restricted mode. See mappy/.claude/plans/desktop-licensing-plan.md §3.
 const LICENSE_TTL_SECONDS = 7 * 24 * 60 * 60;
 

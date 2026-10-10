@@ -3,8 +3,8 @@ import { Navbar } from "@/components/landing/Navbar";
 import { Footer } from "@/components/landing/Footer";
 
 export const metadata: Metadata = {
-  title: "Changelog — MapWise",
-  description: "Every update to MapWise, from day one.",
+  title: "Changelog — Chizu",
+  description: "Every update to Chizu, from day one.",
 };
 
 type Entry = {
@@ -21,7 +21,7 @@ const entries: Entry[] = [
     date: "October 1, 2026",
     latest: true,
     description:
-      "The first public release of MapWise — search, animate and export map videos from a real desktop editor.",
+      "The first public release of Chizu — search, animate and export map videos from a real desktop editor.",
     features: [
       {
         name: "World map",
@@ -72,7 +72,7 @@ export default function ChangelogPage() {
             Changelog
           </h1>
           <p className="mt-2 text-[#16140f]/60">
-            Every update to MapWise, from day one.
+            Every update to Chizu, from day one.
           </p>
 
           <div className="mt-10 space-y-6">

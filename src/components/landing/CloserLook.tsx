@@ -2,7 +2,7 @@ const features = [
   {
     title: "Create your project",
     description:
-      "Start a new MapWise project in seconds and pick up right where inspiration strikes.",
+      "Start a new Chizu project in seconds and pick up right where inspiration strikes.",
     video: "/create-project.mp4",
   },
   {
@@ -35,7 +35,7 @@ export function CloserLook() {
           Built for creators who care.
         </h2>
         <p className="mx-auto mt-4 max-w-md text-[#16140f]/60">
-          Every part of MapWise is built to turn an idea into a finished
+          Every part of Chizu is built to turn an idea into a finished
           video, fast.
         </p>
       </div>

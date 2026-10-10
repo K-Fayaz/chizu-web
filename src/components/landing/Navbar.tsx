@@ -20,10 +20,10 @@ export function Navbar() {
         </nav>
 
         <Link
-          href="#get-mapwise"
+          href="#get-chizu"
           className="rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-dark"
         >
-          Get MapWise
+          Get Chizu
         </Link>
       </div>
     </header>

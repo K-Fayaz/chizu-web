@@ -1,5 +1,24 @@
 # Changelog — app (engineering notes)
 
+## 2026-10-10 — Renamed to Chizu
+
+The product is now **Chizu** ("MapWise" was a placeholder). Rule: no "MapWise" or "mappy" anywhere in the code. The desktop app's half, and the reasoning, is in `mappy/.development_logs/changelog.md`.
+
+- **All user-facing copy** says Chizu: root layout metadata, landing components (Navbar, Logo, Hero, CTA, FAQ, Pricing, CloserLook, VideoGallery, Footer), `/changelog`, `/desktop/connect`, `/desktop/subscribe`, `/desktop/subscribed`, and the dashboard Devices card.
+- The "Get it" anchor `#get-mapwise` → `#get-chizu` (Navbar, Hero, Pricing, CTA).
+- Code comments that called the desktop app "mappy" now say "the desktop app". Paths like `mappy/src-tauri/...` are unchanged; the folder keeps its name.
+- No API, database or behaviour changes. The desktop app's env var is now `CHIZU_API_URL` (was `MAPPY_API_URL`); the web app's own env vars are unchanged.
+
+### Verified
+`tsc`, `eslint` (one pre-existing `<img>` warning in `VideoGallery`) and `next build` pass. Sign-in from the renamed desktop app tested end to end.
+
+### Still open
+- **Copy that's wrong for other reasons**, left for the download-page work (todo 5.1):
+  - FAQ, CTA and Hero say "Linux only, Windows and macOS coming soon". The launch will be Windows + Linux.
+  - The FAQ says "try Chizu free, no credit card", which contradicts paid-only access.
+- The Clerk application name and Dodo business/product names still say MapWise in the dev/test setups. Users see them on the sign-in card, in Clerk emails, at checkout and on receipts. They'll be set to Chizu when the production Clerk instance and Dodo live mode are created (todo 5.3).
+- The public `/changelog` page still has only the Beta entry.
+
 ## 2026-10-03 — Desktop licensing hardening (Phase 6)
 
 Follow-up to the entry below; resolves several of its deferred items.

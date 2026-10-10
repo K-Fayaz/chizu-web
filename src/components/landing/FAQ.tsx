@@ -5,14 +5,14 @@ import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
-    question: "Is MapWise available for Windows or macOS?",
+    question: "Is Chizu available for Windows or macOS?",
     answer:
-      "MapWise is currently available as a desktop app for Linux. Windows and macOS support is coming soon.",
+      "Chizu is currently available as a desktop app for Linux. Windows and macOS support is coming soon.",
   },
   {
     question: "Can I use my own audio?",
     answer:
-      "Yes. Add your own narration or music track and MapWise will help you time your animation to the waveform.",
+      "Yes. Add your own narration or music track and Chizu will help you time your animation to the waveform.",
   },
   {
     question: "What export formats are supported?",
@@ -22,12 +22,12 @@ const faqs = [
   {
     question: "Do you offer a free trial?",
     answer:
-      "Yes. You can try MapWise free before subscribing — no credit card required to get started.",
+      "Yes. You can try Chizu free before subscribing — no credit card required to get started.",
   },
   {
     question: "Can I use the videos commercially?",
     answer:
-      "Yes. Videos you export with MapWise are yours to use however you like, including commercial projects.",
+      "Yes. Videos you export with Chizu are yours to use however you like, including commercial projects.",
   },
   {
     question: "What if I cancel and want to come back later?",

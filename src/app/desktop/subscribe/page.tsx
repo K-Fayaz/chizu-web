@@ -17,7 +17,7 @@ export default async function DesktopSubscribePage() {
     return (
       <DesktopCard title="You're already subscribed">
         <p>
-          Your subscription is active. Return to MapWise — it unlocks within a
+          Your subscription is active. Return to Chizu — it unlocks within a
           few seconds. You can close this tab.
         </p>
       </DesktopCard>

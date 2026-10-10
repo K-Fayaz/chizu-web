@@ -53,7 +53,7 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 py-6 text-xs text-white/40 sm:flex-row">
-          <p>© 2026 MapWise. Maps for better stories.</p>
+          <p>© 2026 Chizu. Maps for better stories.</p>
           <p>Not affiliated with any mapping provider.</p>
         </div>
       </div>
@@ -62,7 +62,7 @@ export function Footer() {
         aria-hidden
         className="pointer-events-none pb-2 text-center text-[18vw] leading-none font-bold whitespace-nowrap text-white/[0.04] select-none sm:text-[9rem]"
       >
-        MapWise
+        Chizu
       </div>
     </footer>
   );

@@ -28,7 +28,7 @@ export default async function DesktopSubscribedPage({
     return (
       <DesktopCard title="Payment received 🎉">
         <p>
-          Thanks for subscribing! Return to MapWise — it unlocks automatically
+          Thanks for subscribing! Return to Chizu — it unlocks automatically
           within a few seconds. You can close this tab.
         </p>
       </DesktopCard>
@@ -38,7 +38,7 @@ export default async function DesktopSubscribedPage({
   return (
     <DesktopCard title="Confirming your payment">
       <p>
-        Return to MapWise — it unlocks automatically as soon as your payment is
+        Return to Chizu — it unlocks automatically as soon as your payment is
         confirmed. You can close this tab.
       </p>
     </DesktopCard>

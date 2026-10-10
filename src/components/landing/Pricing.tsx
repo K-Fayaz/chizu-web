@@ -38,7 +38,7 @@ export function Pricing() {
           One price. <span className="font-serif text-brand italic">Locked in for life.</span>
         </h2>
         <p className="mx-auto mt-4 max-w-lg text-[#16140f]/60">
-          Lock in your monthly rate today — it never goes up. If MapWise
+          Lock in your monthly rate today — it never goes up. If Chizu
           doesn&apos;t fit how you work, email us within 14 days and
           we&apos;ll refund you.
         </p>
@@ -82,10 +82,10 @@ export function Pricing() {
           <PricingCard
             cta={
               <Link
-                href="#get-mapwise"
+                href="#get-chizu"
                 className="mt-6 flex w-full items-center justify-center rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-dark"
               >
-                Get MapWise — $14.99/mo
+                Get Chizu — $14.99/mo
               </Link>
             }
           />

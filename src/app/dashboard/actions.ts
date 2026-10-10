@@ -53,7 +53,7 @@ export async function createCheckoutSession() {
   await startCheckout("/dashboard");
 }
 
-// Started from the desktop app's paywall — lands on a "return to MapWise"
+// Started from the desktop app's paywall — lands on a "return to Chizu"
 // page instead of the dashboard.
 export async function createDesktopCheckoutSession() {
   await startCheckout("/desktop/subscribed");

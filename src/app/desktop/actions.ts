@@ -11,7 +11,7 @@ export async function approveDesktopConnection(formData: FormData) {
   if (typeof code !== "string") redirect("/desktop/connect");
 
   // The license endpoint treats a missing users doc as a deleted account and
-  // revokes the session, so make sure it exists before mappy's first refresh.
+  // revokes the session, so make sure it exists before the desktop app's first refresh.
   await ensureUserDoc(userId);
   await approveConnectCode(code, userId);
 

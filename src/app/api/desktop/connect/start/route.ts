@@ -11,7 +11,7 @@ import { badRequest, readJsonObject, stringField } from "@/lib/desktop/request";
 const CODE_TTL_SECONDS = 10 * 60;
 const POLL_INTERVAL_SECONDS = 3;
 
-// Step 1 of connecting mappy: hands back a secret deviceCode for mappy to
+// Step 1 of connecting the desktop app: hands back a secret deviceCode for the desktop app to
 // poll with, and a browser URL carrying the public userCode for the user to
 // approve while signed in.
 export async function POST(request: Request) {

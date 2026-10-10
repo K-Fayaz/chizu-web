@@ -41,7 +41,7 @@ export default async function DesktopConnectPage({
       <DesktopCard title="This link has expired">
         <p>
           Connection links only work once and expire after 10 minutes. Go back
-          to MapWise and click <strong>Sign in</strong> again to get a new one.
+          to Chizu and click <strong>Sign in</strong> again to get a new one.
         </p>
       </DesktopCard>
     );
@@ -52,7 +52,7 @@ export default async function DesktopConnectPage({
       <DesktopCard title="You're connected">
         <p>
           <strong>{connectCode.deviceName}</strong> is now signed in to your
-          account. You can close this tab and return to MapWise.
+          account. You can close this tab and return to Chizu.
         </p>
       </DesktopCard>
     );
@@ -63,7 +63,7 @@ export default async function DesktopConnectPage({
   const connectUrl = `/desktop/connect?code=${encodeURIComponent(code)}`;
 
   return (
-    <DesktopCard title="Connect MapWise on this computer?">
+    <DesktopCard title="Connect Chizu on this computer?">
       <div className="flex items-center gap-3 rounded-xl bg-[#16140f]/[0.03] p-3">
         {user?.imageUrl && (
           <Image
@@ -90,7 +90,7 @@ export default async function DesktopConnectPage({
           machine and send this link to you. The device name above is chosen
           by whoever started it, so it proves nothing on its own. */}
       <div className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-amber-900">
-        Only continue if <strong>you just clicked Sign in in MapWise</strong>{" "}
+        Only continue if <strong>you just clicked Sign in in Chizu</strong>{" "}
         on your own computer and it&apos;s showing the code{" "}
         <code className="rounded bg-white/70 px-1.5 py-0.5 font-mono font-semibold">
           {code}

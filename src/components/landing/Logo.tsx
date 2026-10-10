@@ -11,7 +11,7 @@ export function Logo({ light = false }: { light?: boolean }) {
           light ? "text-white" : "text-[#16140f]"
         }`}
       >
-        MapWise
+        Chizu
       </span>
     </div>
   );

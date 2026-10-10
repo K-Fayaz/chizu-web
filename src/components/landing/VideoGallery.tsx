@@ -40,10 +40,10 @@ export function VideoGallery() {
           REAL STORIES. REAL MAPS.
         </span>
         <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[#16140f] sm:text-4xl">
-          Videos made with MapWise
+          Videos made with Chizu
         </h2>
         <p className="mx-auto mt-4 max-w-md text-[#16140f]/60">
-          Here are some videos created using MapWise.
+          Here are some videos created using Chizu.
         </p>
       </div>
 

@@ -35,10 +35,10 @@ export function Hero() {
 
           <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <Link
-              href="#get-mapwise"
+              href="#get-chizu"
               className="rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-dark"
             >
-              Get MapWise
+              Get Chizu
             </Link>
             <Link
               href="#"
@@ -75,7 +75,7 @@ export function Hero() {
           <div className="overflow-hidden rounded-2xl border border-black/10 shadow-2xl shadow-black/30 lg:[transform:rotateY(-28deg)_rotateX(10deg)_rotateZ(-3deg)_scale(1.15)]">
             <Image
               src="/public.png"
-              alt="MapWise app screenshot"
+              alt="Chizu app screenshot"
               width={1912}
               height={1123}
               priority

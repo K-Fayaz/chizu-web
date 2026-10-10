@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MapWise — Create map videos without the editing headache",
+  title: "Chizu — Create map videos without the editing headache",
   description:
     "A clean, powerful desktop app to make animated maps, add your story, and export beautiful videos.",
 };

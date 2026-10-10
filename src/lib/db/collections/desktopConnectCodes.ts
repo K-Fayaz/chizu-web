@@ -2,7 +2,7 @@ import { getDb } from "@/lib/db/client";
 
 // One in-flight "connect this desktop" attempt. The short userCode travels in
 // the browser URL and can only approve; the long deviceCode never leaves
-// mappy (stored here only as a hash) and is what collects the session token.
+// the desktop app (stored here only as a hash) and is what collects the session token.
 export type ConnectCodeStatus = "pending" | "approved" | "consumed";
 
 export type DesktopConnectCodeDoc = {

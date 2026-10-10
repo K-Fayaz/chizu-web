@@ -9,15 +9,15 @@ export function CTA() {
           Your next map video starts here.
         </h2>
         <p className="mx-auto mt-3 max-w-md text-white/80">
-          Download MapWise and bring your ideas to life.
+          Download Chizu and bring your ideas to life.
         </p>
 
         <Link
-          href="#get-mapwise"
-          id="get-mapwise"
+          href="#get-chizu"
+          id="get-chizu"
           className="mt-7 inline-flex items-center justify-center rounded-full bg-[#16140f] px-6 py-3 text-sm font-semibold text-white transition hover:bg-black"
         >
-          Get MapWise
+          Get Chizu
         </Link>
 
         <div className="mt-5 flex items-center justify-center gap-2 text-xs text-white/70">

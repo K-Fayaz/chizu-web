@@ -15,7 +15,7 @@ export type DesktopSessionDoc = {
 };
 
 // A session nobody has used for this long stops working (a lost or
-// abandoned computer), and drops off the dashboard's device list. Mappy
+// abandoned computer), and drops off the dashboard's device list. The desktop app
 // refreshes every few hours while running, so only machines that have been
 // switched off or offline this long are affected -- they just sign in again.
 const SESSION_IDLE_EXPIRY_MS = 90 * 24 * 60 * 60 * 1000;

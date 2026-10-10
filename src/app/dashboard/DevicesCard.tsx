@@ -18,7 +18,7 @@ export async function DevicesCard({ clerkUserId }: { clerkUserId: string }) {
     <div className="rounded-2xl border border-black/10 bg-white p-6 shadow-xl shadow-black/5">
       <h2 className="text-lg font-semibold">Devices</h2>
       <p className="mt-1 text-sm text-[#16140f]/60">
-        Computers signed in to the MapWise desktop app.
+        Computers signed in to the Chizu desktop app.
       </p>
 
       {sessions.length === 0 ? (
