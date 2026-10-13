@@ -12,52 +12,24 @@ type Entry = {
   date: string;
   latest?: boolean;
   description: string;
-  features: { name: string; description: string }[];
+  features: string[];
 };
 
+// Newest first, kept short: one plain sentence per feature. Set the date of
+// the 0.1.0 entry on launch day (it's the first public release).
 const entries: Entry[] = [
   {
-    version: "Beta",
-    date: "October 1, 2026",
+    version: "0.1.0",
+    date: "Launching soon",
     latest: true,
-    description:
-      "The first public release of Chizu — search, animate and export map videos from a real desktop editor.",
+    description: "The first public release of Chizu.",
     features: [
-      {
-        name: "World map",
-        description:
-          "Explore countries, states, rivers, lakes and seas, with political map coloring and instant search.",
-      },
-      {
-        name: "Camera & animation",
-        description:
-          "Smooth cinematic camera moves, scripted pans and zooms, per-scene zoom control, and a “Hold” beat between scenes.",
-      },
-      {
-        name: "Visual timeline",
-        description:
-          "Sequence your scenes and play them back in order, scene by scene.",
-      },
-      {
-        name: "Highlights & styling",
-        description:
-          "Per-scene highlight colors that can stack, flag-image fills, and your own custom image uploads.",
-      },
-      {
-        name: "Audio",
-        description:
-          "Import a reference track and scrub scenes and audio together in sync, waveform included.",
-      },
-      {
-        name: "Export",
-        description:
-          "Export finished videos with a live aspect ratio picker (9:16 or 16:9) and export progress.",
-      },
-      {
-        name: "Projects",
-        description:
-          "Create, save, rename and reopen projects from a home screen, with naming built into project creation.",
-      },
+      "Animate stories across a world map of countries and states.",
+      "Highlight places with colours, flags or your own images.",
+      "Smooth camera flights, pans and zooms between scenes.",
+      "Add narration or music and time your scenes to it.",
+      "Export MP4 videos in 9:16 or 16:9.",
+      "Available for Windows and Linux, with automatic updates.",
     ],
   },
 ];
@@ -104,18 +76,13 @@ export default function ChangelogPage() {
                 </p>
 
                 <p className="mt-6 text-xs font-semibold tracking-[0.15em] text-[#16140f]/40">
-                  NEW FEATURES
+                  FEATURES
                 </p>
                 <ul className="mt-3 space-y-2.5">
                   {entry.features.map((feature) => (
-                    <li key={feature.name} className="flex gap-2.5">
+                    <li key={feature} className="flex gap-2.5">
                       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" />
-                      <span className="text-sm text-[#16140f]/70">
-                        <strong className="font-semibold text-[#16140f]">
-                          {feature.name}
-                        </strong>{" "}
-                        — {feature.description}
-                      </span>
+                      <span className="text-sm text-[#16140f]/70">{feature}</span>
                     </li>
                   ))}
                 </ul>

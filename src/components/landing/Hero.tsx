@@ -35,7 +35,7 @@ export function Hero() {
 
           <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <Link
-              href="#get-chizu"
+              href="/download"
               className="rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-dark"
             >
               Get Chizu
@@ -51,7 +51,7 @@ export function Hero() {
 
           <div className="mt-6 flex items-center gap-2 text-xs text-[#16140f]/50">
             <Laptop className="h-3.5 w-3.5" />
-            <span>Available for Linux · Windows &amp; macOS coming soon</span>
+            <span>Available for Windows &amp; Linux · macOS coming later</span>
           </div>
 
           <div className="mt-12 flex items-center gap-8">

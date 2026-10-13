@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Apple } from "lucide-react";
+import { Laptop } from "lucide-react";
 
 export function CTA() {
   return (
@@ -13,16 +13,15 @@ export function CTA() {
         </p>
 
         <Link
-          href="#get-chizu"
-          id="get-chizu"
+          href="/download"
           className="mt-7 inline-flex items-center justify-center rounded-full bg-[#16140f] px-6 py-3 text-sm font-semibold text-white transition hover:bg-black"
         >
           Get Chizu
         </Link>
 
         <div className="mt-5 flex items-center justify-center gap-2 text-xs text-white/70">
-          <Apple className="h-3.5 w-3.5" />
-          <span>A desktop app for Linux · Coming to Windows &amp; macOS</span>
+          <Laptop className="h-3.5 w-3.5" />
+          <span>A desktop app for Windows &amp; Linux · macOS coming later</span>
         </div>
       </div>
     </section>

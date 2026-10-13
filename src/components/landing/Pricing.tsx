@@ -82,7 +82,7 @@ export function Pricing() {
           <PricingCard
             cta={
               <Link
-                href="#get-chizu"
+                href="/download"
                 className="mt-6 flex w-full items-center justify-center rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-dark"
               >
                 Get Chizu — $14.99/mo

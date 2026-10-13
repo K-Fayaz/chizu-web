@@ -5,9 +5,9 @@ import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
-    question: "Is Chizu available for Windows or macOS?",
+    question: "Which computers does Chizu run on?",
     answer:
-      "Chizu is currently available as a desktop app for Linux. Windows and macOS support is coming soon.",
+      "Chizu is a desktop app for Windows 10/11 and Linux (Ubuntu, Debian, Mint and most other distributions). macOS support is coming later.",
   },
   {
     question: "Can I use my own audio?",
@@ -22,7 +22,7 @@ const faqs = [
   {
     question: "Do you offer a free trial?",
     answer:
-      "Yes. You can try Chizu free before subscribing — no credit card required to get started.",
+      "Not at the moment. Creating and editing projects needs an active subscription. You can cancel any time from your dashboard, and the projects on your computer stay there: you can still open, play and export them.",
   },
   {
     question: "Can I use the videos commercially?",

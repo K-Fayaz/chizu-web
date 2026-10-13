@@ -20,7 +20,7 @@ export function Navbar() {
         </nav>
 
         <Link
-          href="#get-chizu"
+          href="/download"
           className="rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-dark"
         >
           Get Chizu
