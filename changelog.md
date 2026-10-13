@@ -1,5 +1,43 @@
 # Changelog — app (engineering notes)
 
+## 2026-10-13 — Download page, landing copy, public changelog
+
+The desktop app now has real installers (Windows `.exe`, Linux `.deb` and AppImage), published by CI to the public `K-Fayaz/chizu-releases` repo. The desktop side, the release pipeline and auto-updates are logged in `mappy/.development_logs/changelog.md`.
+
+- **`/download`** (`src/app/download/page.tsx`):
+  - **Windows card** with SmartScreen steps.
+  - **Linux `.deb` card** with double-click / `sudo apt install` steps.
+  - **Collapsible "Other Linux: AppImage"** section: `chmod +x`, keep it in a permanent folder, `libfuse2` hint.
+  - **Short notes** on signing in / subscription and on automatic updates.
+  - **FFmpeg GPL notice.**
+  - **"FOR THIS COMPUTER" badge** on the card matching the visitor's OS (`RecommendedBadge.tsx`, client-side user-agent check; nothing on macOS or phones), so the page stays static.
+- **`src/lib/releases.ts`:**
+  - **Source:** links come from GitHub's API for the newest *published* release, matching files by suffix (`_x64-setup.exe`, `_amd64.deb`, `_amd64.AppImage`). It doesn't read `latest.json`.
+  - **Caching:** `fetch` with `next: { revalidate: 300 }`, so `/download` builds as a static page refreshed every 5 minutes, well inside GitHub's 60 unauthenticated requests per hour.
+  - **Fallback:** no release, or GitHub unreachable → "Downloads aren't available right now" plus a link to the releases page.
+- **Landing:**
+  - Every "Get Chizu" button (Navbar, Hero, Pricing, CTA) → `/download` (was `#get-chizu`).
+  - Hero/CTA platform lines now read "Windows & Linux · macOS coming later".
+- **FAQ:**
+  - "Which computers does Chizu run on?" → Windows 10/11 and Linux.
+  - "Do you offer a free trial?" → **no** (it used to promise one, which contradicted paid-only access). Cancel any time; local projects stay openable and exportable.
+- **`/changelog`:**
+  - The old hard-coded "Beta — October 1, 2026" entry is removed.
+  - It now has a single minimal "0.1.0 — The first public release of Chizu" entry with six one-line features (style borrowed from matte.app).
+  - The `Entry.features` type is now `string[]`, and the label reads "FEATURES".
+  - **Date reads "Launching soon": set it on launch day.**
+
+### Verified
+`tsc`, `eslint` (only the existing `<img>` warning in `VideoGallery`), `next build` (`/download` and `/changelog` static). The download page was rendered against the live v0.0.1 test release: 3 links, sizes match GitHub (46/67/189 MB), 4 landing links to `/download`.
+
+### Still open
+- Right now `/download` shows **v0.0.1, the published test release**. It switches to v0.1.0 by itself once that's published and 0.0.1 is deleted.
+- **Testing desktop release builds against this app:**
+  - `NEXT_PUBLIC_APP_URL` must equal the desktop app's `CHIZU_API_URL` (e.g. the ngrok address), or sign-in fails with "Unexpected sign-in link from the server."
+  - Switch it back to `http://localhost:3000` for `tauri dev`.
+  - See `mappy/docs/releasing.md`.
+- Production (unchanged from 2026-10-03): domain, `NEXT_PUBLIC_APP_URL`, Clerk/Dodo production instances named Chizu, webhooks, `TRUSTED_IP_HEADER`.
+
 ## 2026-10-10 — Renamed to Chizu
 
 The product is now **Chizu** ("MapWise" was a placeholder). Rule: no "MapWise" or "mappy" anywhere in the code. The desktop app's half, and the reasoning, is in `mappy/.development_logs/changelog.md`.
