@@ -12,20 +12,22 @@ const perks = [
 
 export function PricingCard({ cta }: { cta: ReactNode }) {
   return (
-    <div className="h-full rounded-2xl border border-black/10 bg-white p-6 shadow-xl shadow-black/5">
-      <div className="flex items-center justify-between border-b border-black/5 pb-4">
+    <div className="h-full rounded-[2rem] bg-white p-7 shadow-xl shadow-foreground/5 ring-1 ring-foreground/5">
+      <div className="flex items-center justify-between border-b border-foreground/5 pb-4">
         <Logo />
-        <span className="text-xs text-[#16140f]/40">Desktop app</span>
+        <span className="rounded-full bg-sand px-2.5 py-1 text-xs font-bold text-foreground/60">
+          Desktop app
+        </span>
       </div>
 
       <div className="mt-5 flex items-baseline gap-2">
-        <span className="text-4xl font-semibold tracking-tight text-[#16140f]">
+        <span className="text-5xl font-black tracking-tight text-foreground">
           $14.99
         </span>
-        <span className="text-sm text-[#16140f]/50">/ month</span>
+        <span className="text-base font-semibold text-foreground/50">/ month</span>
       </div>
 
-      <p className="mt-3 text-xs font-medium text-brand">
+      <p className="mt-3 rounded-2xl bg-coral/10 px-3.5 py-2.5 text-xs font-bold text-[#c2410c]">
         Only 50 spots at this launch rate — $29/month once they&apos;re gone.
         Your rate stays locked in for as long as you keep your subscription
         active.
@@ -35,9 +37,11 @@ export function PricingCard({ cta }: { cta: ReactNode }) {
         {perks.map((perk) => (
           <li
             key={perk}
-            className="flex items-start gap-2 text-sm text-[#16140f]/70"
+            className="flex items-start gap-2.5 text-sm font-semibold text-foreground/75"
           >
-            <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
+            <span className="mt-px flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-land/25 text-[#3f6212]">
+              <Check className="h-3 w-3" strokeWidth={3} />
+            </span>
             {perk}
           </li>
         ))}
@@ -45,7 +49,7 @@ export function PricingCard({ cta }: { cta: ReactNode }) {
 
       {cta}
 
-      <p className="mt-3 text-center text-xs text-[#16140f]/40">
+      <p className="mt-3 text-center text-xs font-semibold text-foreground/45">
         Cancel anytime · Prices in USD
       </p>
     </div>

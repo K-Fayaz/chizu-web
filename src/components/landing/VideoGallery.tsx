@@ -1,4 +1,5 @@
 import { Play } from "lucide-react";
+import { Eyebrow } from "./Scenery";
 
 const videos = [
   {
@@ -34,21 +35,19 @@ const loop = [...videos, ...videos];
 
 export function VideoGallery() {
   return (
-    <section className="overflow-hidden bg-white py-20">
+    <section className="overflow-hidden py-20">
       <div className="mx-auto max-w-6xl px-6 text-center">
-        <span className="text-xs font-semibold tracking-[0.2em] text-brand">
-          REAL STORIES. REAL MAPS.
-        </span>
-        <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[#16140f] sm:text-4xl">
+        <Eyebrow>REAL STORIES. REAL MAPS.</Eyebrow>
+        <h2 className="mt-4 text-4xl font-black tracking-tight text-foreground sm:text-5xl">
           Videos made with Chizu
         </h2>
-        <p className="mx-auto mt-4 max-w-md text-[#16140f]/60">
+        <p className="mx-auto mt-5 max-w-md text-lg font-medium text-foreground/65">
           Here are some videos created using Chizu.
         </p>
       </div>
 
       <div
-        className="pause-on-hover relative mt-10 w-full"
+        className="pause-on-hover relative mt-12 w-full"
         style={{
           maskImage:
             "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
@@ -63,10 +62,10 @@ export function VideoGallery() {
               href={`https://www.youtube.com/shorts/${video.id}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-40 flex-none sm:w-48"
+              className="group w-40 flex-none sm:w-48"
             >
-              <div className="group relative overflow-hidden rounded-xl">
-                <div className="aspect-[9/16] w-full">
+              <div className="group relative overflow-hidden rounded-[1.25rem] bg-white p-1.5 shadow-md shadow-foreground/10 ring-1 ring-foreground/5 transition group-hover:-translate-y-1">
+                <div className="aspect-[9/16] w-full overflow-hidden rounded-2xl">
                   <img
                     src={`https://i.ytimg.com/vi/${video.id}/oar2.jpg`}
                     alt={video.title}
@@ -75,12 +74,12 @@ export function VideoGallery() {
                   />
                 </div>
                 <span className="absolute inset-0 flex items-center justify-center">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#16140f] shadow transition group-hover:scale-105">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-coral text-white shadow-lg shadow-coral/30 transition group-hover:scale-110">
                     <Play className="ml-0.5 h-4 w-4" fill="currentColor" />
                   </span>
                 </span>
               </div>
-              <p className="mt-2 text-left text-sm font-medium text-[#16140f]/80">
+              <p className="mt-3 px-1 text-left text-sm font-bold text-foreground/80">
                 {video.title}
               </p>
             </a>

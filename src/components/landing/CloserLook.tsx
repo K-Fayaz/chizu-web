@@ -1,3 +1,7 @@
+import { Eyebrow } from "./Scenery";
+
+const accents = ["bg-ocean", "bg-land", "bg-coral", "bg-sky"];
+
 const features = [
   {
     title: "Create your project",
@@ -26,34 +30,36 @@ const features = [
 
 export function CloserLook() {
   return (
-    <section className="bg-white py-20">
+    <section className="py-20">
       <div className="mx-auto max-w-3xl px-6 text-center">
-        <span className="text-xs font-semibold tracking-[0.2em] text-brand">
-          A CLOSER LOOK
-        </span>
-        <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[#16140f] sm:text-4xl">
+        <Eyebrow>A CLOSER LOOK</Eyebrow>
+        <h2 className="mt-4 text-4xl font-black tracking-tight text-foreground sm:text-5xl">
           Built for creators who care.
         </h2>
-        <p className="mx-auto mt-4 max-w-md text-[#16140f]/60">
+        <p className="mx-auto mt-5 max-w-md text-lg font-medium text-foreground/65">
           Every part of Chizu is built to turn an idea into a finished
           video, fast.
         </p>
       </div>
 
       <div className="mx-auto mt-12 grid max-w-6xl gap-6 px-6 sm:grid-cols-2">
-        {features.map((feature) => (
+        {features.map((feature, index) => (
           <div
             key={feature.title}
-            className="flex flex-col rounded-2xl border border-black/10 bg-cream/60 p-6"
+            className="flex flex-col rounded-[2rem] bg-white p-6 shadow-lg shadow-foreground/5 ring-1 ring-foreground/5"
           >
-            <h3 className="text-lg font-semibold text-[#16140f]">
+            <h3 className="flex items-center gap-2.5 text-xl font-extrabold text-foreground">
+              <span
+                aria-hidden
+                className={`h-3 w-3 rounded-full ${accents[index % accents.length]}`}
+              />
               {feature.title}
             </h3>
-            <p className="mt-1.5 text-sm text-[#16140f]/60">
+            <p className="mt-2 text-base font-medium text-foreground/60">
               {feature.description}
             </p>
 
-            <div className="mt-5 overflow-hidden rounded-xl border border-black/10 bg-ink">
+            <div className="mt-5 overflow-hidden rounded-2xl bg-ink ring-1 ring-foreground/10">
               <div className="aspect-[16/10] w-full">
                 <video
                   src={feature.video}

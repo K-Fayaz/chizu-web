@@ -29,20 +29,20 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-2">
               <Logo light />
-              <span className="rounded-full border border-white/15 px-2 py-0.5 text-[11px] font-medium text-white/50">
+              <span className="rounded-full border border-white/15 px-2.5 py-0.5 text-[11px] font-bold text-white/60">
                 Desktop app
               </span>
             </div>
 
-            <h3 className="mt-6 text-2xl leading-tight font-semibold text-white sm:text-3xl">
+            <h3 className="mt-6 text-3xl leading-tight font-black text-white">
               Your Stories
               <br />
-              <span className="font-serif text-brand italic">
+              <span className="text-land">
                 Can Move Like This
               </span>
             </h3>
 
-            <p className="mt-4 max-w-xs text-sm text-white/50">
+            <p className="mt-4 max-w-xs text-sm font-medium text-white/60">
               A useful map animation tool for everything you create.
             </p>
           </div>
@@ -52,7 +52,7 @@ export function Footer() {
           <FooterColumn title="More" links={moreLinks} />
         </div>
 
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 py-6 text-xs text-white/40 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-white/10 py-6 text-xs font-semibold text-white/45 sm:flex-row">
           <p>© 2026 Chizu. Maps for better stories.</p>
           <p>Not affiliated with any mapping provider.</p>
         </div>
@@ -60,7 +60,7 @@ export function Footer() {
 
       <div
         aria-hidden
-        className="pointer-events-none pb-2 text-center text-[18vw] leading-none font-bold whitespace-nowrap text-white/[0.04] select-none sm:text-[9rem]"
+        className="pointer-events-none pb-2 text-center text-[18vw] leading-none font-black whitespace-nowrap text-white/[0.05] select-none sm:text-[9rem]"
       >
         Chizu
       </div>
@@ -71,7 +71,7 @@ export function Footer() {
 function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) {
   return (
     <div>
-      <p className="text-xs font-semibold tracking-[0.15em] text-white/40">
+      <p className="text-xs font-extrabold tracking-[0.2em] text-land/80">
         {title.toUpperCase()}
       </p>
       <ul className="mt-4 space-y-2.5">
@@ -79,7 +79,7 @@ function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) 
           <li key={link.label}>
             <Link
               href={link.href}
-              className="text-sm text-white/70 transition hover:text-white"
+              className="text-sm font-semibold text-white/70 transition hover:text-white"
             >
               {link.label}
             </Link>

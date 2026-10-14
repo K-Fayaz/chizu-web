@@ -10,9 +10,9 @@ export async function AvatarGrid() {
   const slots = Array.from({ length: FOUNDING_MEMBER_LIMIT }, (_, index) => index);
 
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-black/10 bg-white p-6 shadow-xl shadow-black/5">
-      <p className="text-sm font-semibold text-[#16140f]">Launch spots</p>
-      <p className="mt-1 text-xs text-[#16140f]/50">
+    <div className="flex h-full flex-col rounded-[2rem] bg-white p-7 shadow-xl shadow-foreground/5 ring-1 ring-foreground/5">
+      <p className="text-lg font-extrabold text-foreground">Launch spots</p>
+      <p className="mt-1 text-sm font-semibold text-foreground/55">
         {remaining} of {FOUNDING_MEMBER_LIMIT} spots left at $14.99/month —
         be one of the first.
       </p>
@@ -47,7 +47,7 @@ export async function AvatarGrid() {
             <div
               key={index}
               title={`Spot ${index + 1} · open`}
-              className="flex aspect-square items-center justify-center rounded-full border border-dashed border-black/15 bg-black/[0.02] text-black/20"
+              className="flex aspect-square items-center justify-center rounded-full border-2 border-dashed border-ocean/30 bg-ocean/5 text-ocean/60"
             >
               <Plus className="h-3.5 w-3.5" strokeWidth={2} />
             </div>
@@ -55,7 +55,7 @@ export async function AvatarGrid() {
         })}
       </div>
 
-      <p className="mt-5 text-xs text-[#16140f]/50">
+      <p className="mt-5 text-sm font-semibold text-foreground/55">
         Your spot could be one of these.
       </p>
     </div>

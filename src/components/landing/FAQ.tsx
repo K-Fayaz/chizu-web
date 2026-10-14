@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { Eyebrow } from "./Scenery";
 
 const faqs = [
   {
@@ -40,35 +41,47 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-white pb-20">
+    <section id="faq" className="pb-24">
       <div className="mx-auto max-w-2xl px-6 text-center">
-        <span className="text-xs font-semibold tracking-[0.2em] text-brand">
-          QUESTIONS
-        </span>
-        <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[#16140f] sm:text-4xl">
+        <Eyebrow>QUESTIONS</Eyebrow>
+        <h2 className="mt-4 text-4xl font-black tracking-tight text-foreground sm:text-5xl">
           Before you get started.
         </h2>
 
-        <div className="mt-10 divide-y divide-black/10 border-t border-b border-black/10 text-left">
+        <div className="mt-10 space-y-3 text-left">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
-              <div key={faq.question}>
+              <div
+                key={faq.question}
+                className={`rounded-[1.25rem] bg-white px-5 ring-1 transition ${
+                  isOpen
+                    ? "shadow-lg shadow-foreground/5 ring-brand/25"
+                    : "ring-foreground/5"
+                }`}
+              >
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
-                  className="flex w-full items-center justify-between gap-4 py-4 text-left text-sm font-medium text-[#16140f]"
+                  className="flex w-full items-center justify-between gap-4 py-4 text-left text-base font-extrabold text-foreground"
                   aria-expanded={isOpen}
                 >
                   {faq.question}
-                  <ChevronDown
-                    className={`h-4 w-4 shrink-0 text-[#16140f]/50 transition-transform ${
-                      isOpen ? "rotate-180" : ""
+                  <span
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition ${
+                      isOpen ? "bg-brand text-white" : "bg-sand text-foreground/60"
                     }`}
-                  />
+                  >
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform ${
+                        isOpen ? "rotate-180" : ""
+                      }`}
+                      strokeWidth={2.5}
+                    />
+                  </span>
                 </button>
                 {isOpen && (
-                  <p className="pb-4 text-sm text-[#16140f]/60">
+                  <p className="pb-5 text-sm leading-relaxed font-medium text-foreground/65">
                     {faq.answer}
                   </p>
                 )}
