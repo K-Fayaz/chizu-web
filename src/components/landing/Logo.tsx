@@ -1,13 +1,11 @@
-import { MapPin } from "lucide-react";
+import Image from "next/image";
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
     <div className="flex items-center gap-2">
-      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-white">
-        <MapPin className="h-4 w-4" strokeWidth={2.5} />
-      </span>
+      <Image src="/chizu-logo.png" alt="" width={44} height={44} className="h-11 w-11" priority />
       <span
-        className={`text-lg font-semibold tracking-tight ${
+        className={`text-xl font-semibold tracking-tight ${
           light ? "text-white" : "text-[#16140f]"
         }`}
       >
