@@ -3,8 +3,22 @@ import { Check, Plus } from "lucide-react";
 import { getFoundingMemberAvatars } from "@/lib/db/collections/subscriptions";
 import { FOUNDING_MEMBER_LIMIT } from "@/lib/dodo/pricing";
 
+type Founders = Awaited<ReturnType<typeof getFoundingMemberAvatars>>;
+
+// Never takes the landing page down: if the database is missing (e.g. at
+// build time on a host without its variables) or unreachable, every spot
+// shows as open until the next refresh (page.tsx revalidates every 60 s).
+async function loadFounders(): Promise<Founders> {
+  try {
+    return await getFoundingMemberAvatars();
+  } catch (err) {
+    console.error("Couldn't load founding members for the landing page", err);
+    return [];
+  }
+}
+
 export async function AvatarGrid() {
-  const founders = await getFoundingMemberAvatars();
+  const founders = await loadFounders();
   const filled = founders.length;
   const remaining = Math.max(FOUNDING_MEMBER_LIMIT - filled, 0);
   const slots = Array.from({ length: FOUNDING_MEMBER_LIMIT }, (_, index) => index);
