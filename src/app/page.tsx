@@ -8,11 +8,6 @@ import { FAQ } from "@/components/landing/FAQ";
 import { CTA } from "@/components/landing/CTA";
 import { Footer } from "@/components/landing/Footer";
 
-// Rebuilt at most once a minute so the founding-member spots (Pricing →
-// AvatarGrid, read from the database) stay current. Without this the page
-// was fully static: the grid would show whatever it was on deploy day.
-export const revalidate = 60;
-
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col">

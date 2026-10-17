@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import type { Subscription } from "dodopayments/resources/subscriptions";
 import type { LicenseKey } from "dodopayments/resources/license-keys";
-import { getDodo } from "@/lib/dodo/client";
+import { dodo } from "@/lib/dodo/client";
 import { resolvePlanForProductId } from "@/lib/dodo/pricing";
 import { getUserByDodoCustomerId } from "@/lib/db/collections/users";
 import { upsertSubscriptionFromDodo } from "@/lib/db/collections/subscriptions";
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
 
   let event;
   try {
-    event = getDodo().webhooks.unwrap(body, {
+    event = dodo.webhooks.unwrap(body, {
       headers: {
         "webhook-id": request.headers.get("webhook-id") ?? "",
         "webhook-signature": request.headers.get("webhook-signature") ?? "",
