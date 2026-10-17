@@ -3,7 +3,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { getDodo } from "@/lib/dodo/client";
+import { dodo } from "@/lib/dodo/client";
 import { getCheckoutPlan } from "@/lib/dodo/pricing";
 import { ensureUserDoc } from "@/lib/clerk/ensureUserDoc";
 import { getUserByClerkId, setDodoCustomerId } from "@/lib/db/collections/users";
@@ -21,7 +21,7 @@ async function getOrCreateDodoCustomerId(clerkUserId: string) {
   }
 
   const name = [userDoc.firstName, userDoc.lastName].filter(Boolean).join(" ");
-  const customer = await getDodo().customers.create({ email, name: name || email });
+  const customer = await dodo.customers.create({ email, name: name || email });
 
   await setDodoCustomerId(clerkUserId, customer.customer_id);
   return customer.customer_id;
@@ -35,7 +35,7 @@ async function startCheckout(returnPath: "/dashboard" | "/desktop/subscribed") {
   const dodoCustomerId = await getOrCreateDodoCustomerId(userId);
   const { plan, productId } = await getCheckoutPlan();
 
-  const session = await getDodo().checkoutSessions.create({
+  const session = await dodo.checkoutSessions.create({
     product_cart: [{ product_id: productId, quantity: 1 }],
     customer: { customer_id: dodoCustomerId },
     return_url: `${process.env.NEXT_PUBLIC_APP_URL}${returnPath}`,
@@ -67,7 +67,7 @@ export async function createBillingPortalSession() {
     redirect("/dashboard");
   }
 
-  const session = await getDodo().customers.customerPortal.create(
+  const session = await dodo.customers.customerPortal.create(
     userDoc.dodoCustomerId,
     { return_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard` },
   );
