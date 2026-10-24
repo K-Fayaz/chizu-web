@@ -1,5 +1,41 @@
 # Changelog — app (engineering notes)
 
+## 2026-10-17 → 10-24 — Production on Vercel (chizu.app)
+
+The web app is deployed on Vercel at **`https://chizu.app`**, still with the test-mode keys for now. The desktop app talks to it: test builds use `CHIZU_API_URL=https://chizu.app`. Windows and Linux were tested end to end against it.
+
+### Code changes
+- **Builds no longer need environment variables.**
+  - **Why:** `next build` imports every route while "collecting page data", and two clients were created at import time:
+    - **Dodo:** the SDK threw without `DODO_PAYMENTS_API_KEY`. This was the first Vercel error.
+    - **MongoDB:** threw "Missing MONGODB_URI" and even connected on import.
+  - **Now:** `getDodo()` (`src/lib/dodo/client.ts`) and `getDb()` (`src/lib/db/client.ts`) create their client on first use. A missing variable fails the request that needs it, not the build. Verified by building a copy with no `.env` files and an empty environment.
+- **The founding-member grid was frozen at build time.**
+  - **Why:** `/` was a fully static page, so `AvatarGrid` read the database once, on deploy.
+  - **Now:** `src/app/page.tsx` has `export const revalidate = 60`, and `AvatarGrid` falls back to "all spots open" if the database can't be reached, so it never breaks the landing page.
+
+### Deployment notes (what it took)
+- **MongoDB Atlas:**
+  - **Allow `0.0.0.0/0`.** Vercel has no fixed IPs. Atlas rejected Vercel with `ReplicaSetNoPrimary` / "tlsv1 alert internal error" until it was added.
+  - **Database user:** use a strong password and least privilege.
+- **Domain:** `chizu.app` must answer **without a redirect** (it first redirected to `www`). The desktop app needs it for two reasons:
+  - **Sign-in:** the sign-in link must match `CHIZU_API_URL` exactly.
+  - **Session:** reqwest drops the `Authorization` header on a redirect to another host.
+- **`NEXT_PUBLIC_APP_URL=https://chizu.app`** is baked in at build time, so a **redeploy** is needed after changing it. Before the redeploy, `connect/start` returned 500 (`new URL(…, undefined)`).
+- **`DESKTOP_LICENSE_PRIVATE_KEY` / `DESKTOP_LICENSE_KID`** are required. Without them sign-in "works" but no license is issued, so the app stays read-only. They must be the same key pair whose public half ships in the desktop app.
+- **Webhooks** now point at the live site: `https://chizu.app/api/webhooks/dodo` (the `subscription.*` events) and `/api/webhooks/clerk` (`user.created/updated/deleted`). Each has its signing secret in Vercel. A payment made while the Dodo webhook still pointed at ngrok was never recorded.
+- **Dodo API key permissions:** Customers: Write, Checkout Sessions: Write, nothing else. The website only calls `customers.create`, `checkoutSessions.create` and `customers.customerPortal.create`.
+- **Dodo product:** founding product: subscription, $14.99/month, **tax inclusive** (the user's choice, so customers pay exactly the advertised price), no entitlements or license keys. The standard ($29) product is only needed before the 50th founding member.
+- **Clerk production instance:**
+  - **DNS:** the instance needs its DNS records (`clerk.`, `accounts.`, `clkmail.` and DKIM CNAMEs). Until they existed, sign-in failed with `ERR_NAME_NOT_RESOLVED` for `clerk.chizu.app`.
+  - **Google sign-in:** needs your **own Google OAuth client** ("Missing required parameter: client_id" otherwise), with redirect URI `https://clerk.chizu.app/v1/oauth_callback`.
+- **`/download` and the release cache:** the page refreshes at most every 5 minutes. A just-published release appears after that, once someone loads the page.
+
+### Still open before launch
+- Dodo **live mode** (key, product ID, webhook and secret from live mode, `DODO_PAYMENTS_ENVIRONMENT=live_mode`) and **`TRUSTED_IP_HEADER=x-real-ip`**.
+- Set the launch date on the `/changelog` 0.1.0 entry.
+- Delete the test release v0.0.1. It's currently published, so `/download` shows it.
+
 ## 2026-10-13 — Download page, landing copy, public changelog
 
 The desktop app now has real installers (Windows `.exe`, Linux `.deb` and AppImage), published by CI to the public `K-Fayaz/chizu-releases` repo. The desktop side, the release pipeline and auto-updates are logged in `mappy/.development_logs/changelog.md`.
