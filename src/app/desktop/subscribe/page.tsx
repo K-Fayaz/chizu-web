@@ -5,7 +5,7 @@ import { getCheckoutPlan } from "@/lib/dodo/pricing";
 import { createDesktopCheckoutSession } from "@/app/dashboard/actions";
 import { DesktopCard, primaryButtonClass } from "../DesktopCard";
 
-const PRICE_LABEL = { founding: "$14.99", standard: "$29" } as const;
+const PRICE_LABEL = { founding: "$5", standard: "$14.99" } as const;
 
 // Opened by the desktop app's paywall. Checkout returns to
 // /desktop/subscribed; the app is polling meanwhile and unlocks on its own.

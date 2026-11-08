@@ -13,7 +13,7 @@ export async function AvatarGrid() {
     <div className="flex h-full flex-col rounded-[2rem] bg-white p-7 shadow-xl shadow-foreground/5 ring-1 ring-foreground/5">
       <p className="text-lg font-extrabold text-foreground">Launch spots</p>
       <p className="mt-1 text-sm font-semibold text-foreground/55">
-        {remaining} of {FOUNDING_MEMBER_LIMIT} spots left at $14.99/month —
+        {remaining} of {FOUNDING_MEMBER_LIMIT} spots left at $5/month —
         be one of the first.
       </p>
 

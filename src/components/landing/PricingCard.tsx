@@ -3,7 +3,7 @@ import { Check } from "lucide-react";
 import { Logo } from "./Logo";
 
 const perks = [
-  "Your $14.99/month rate, locked in for as long as you stay subscribed",
+  "Your $5/month rate, locked in for as long as you stay subscribed",
   "Unlimited projects",
   "All export options",
   "Audio support",
@@ -22,13 +22,13 @@ export function PricingCard({ cta }: { cta: ReactNode }) {
 
       <div className="mt-5 flex items-baseline gap-2">
         <span className="text-5xl font-black tracking-tight text-foreground">
-          $14.99
+          $5
         </span>
         <span className="text-base font-semibold text-foreground/50">/ month</span>
       </div>
 
       <p className="mt-3 rounded-2xl bg-coral/10 px-3.5 py-2.5 text-xs font-bold text-[#c2410c]">
-        Only 50 spots at this launch rate — $29/month once they&apos;re gone.
+        Only 50 spots at this launch rate — $14.99/month once they&apos;re gone.
         Your rate stays locked in for as long as you keep your subscription
         active.
       </p>

@@ -82,7 +82,7 @@ export default async function DashboardPage({
                     type="submit"
                     className="mt-6 flex w-full items-center justify-center rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-dark"
                   >
-                    Subscribe — $14.99/mo
+                    Subscribe — $5/mo
                   </button>
                 </form>
               }

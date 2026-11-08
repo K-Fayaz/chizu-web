@@ -5,7 +5,7 @@ import { Eyebrow } from "./Scenery";
 
 const tiers = [
   {
-    price: "$14.99",
+    price: "$5",
     align: "items-start text-left",
     dotPosition: "left-0",
     dotSize: "h-4 w-4",
@@ -15,7 +15,7 @@ const tiers = [
     current: true,
   },
   {
-    price: "$29",
+    price: "$14.99",
     align: "items-end text-right",
     dotPosition: "right-0",
     dotSize: "h-2.5 w-2.5",
@@ -84,7 +84,7 @@ export function Pricing() {
                 href="/download"
                 className="mt-6 flex w-full items-center justify-center rounded-full bg-brand px-5 py-3.5 text-base font-extrabold text-white shadow-lg shadow-brand/25 transition hover:bg-brand-dark"
               >
-                Get Chizu — $14.99/mo
+                Get Chizu — $5/mo
               </Link>
             }
           />
