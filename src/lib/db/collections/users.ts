@@ -22,9 +22,15 @@ async function usersCollection() {
 
   indexesEnsured ??= Promise.all([
     collection.createIndex({ clerkUserId: 1 }, { unique: true }),
+    // Partial, not sparse: every user starts with dodoCustomerId: null, and a
+    // sparse index still indexes explicit nulls, so a second signup collided.
     collection.createIndex(
       { dodoCustomerId: 1 },
-      { unique: true, sparse: true },
+      {
+        name: "dodoCustomerId_unique_when_set",
+        unique: true,
+        partialFilterExpression: { dodoCustomerId: { $type: "string" } },
+      },
     ),
   ]);
   await indexesEnsured;
