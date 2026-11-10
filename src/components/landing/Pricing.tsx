@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FOUNDING_MEMBER_LIMIT } from "@/lib/dodo/pricing";
 import { AvatarGrid } from "./AvatarGrid";
 import { PricingCard } from "./PricingCard";
 import { Eyebrow } from "./Scenery";
@@ -89,7 +90,7 @@ export function Pricing() {
             }
           />
 
-          <AvatarGrid />
+          <AvatarGrid total={FOUNDING_MEMBER_LIMIT} />
         </div>
       </div>
     </section>

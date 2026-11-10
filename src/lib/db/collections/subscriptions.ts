@@ -88,7 +88,7 @@ export async function getFoundingMemberAvatars() {
   const subscriptions = await subscriptionsCollection();
 
   return subscriptions
-    .aggregate<{ clerkUserId: string; imageUrl: string | null }>([
+    .aggregate<{ imageUrl: string | null }>([
       { $match: { plan: "founding", status: { $in: ACTIVE_STATUSES } } },
       { $sort: { createdAt: 1 } },
       {
@@ -100,7 +100,8 @@ export async function getFoundingMemberAvatars() {
         },
       },
       { $unwind: "$user" },
-      { $project: { _id: 0, clerkUserId: 1, imageUrl: "$user.imageUrl" } },
+      // Public data: only the profile image, never ids or emails.
+      { $project: { _id: 0, imageUrl: "$user.imageUrl" } },
     ])
     .toArray();
 }
