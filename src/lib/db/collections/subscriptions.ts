@@ -70,9 +70,14 @@ export async function upsertSubscriptionFromDodo(data: {
 
 export async function getActiveSubscriptionByClerkId(clerkUserId: string) {
   const subscriptions = await subscriptionsCollection();
+  // A cancelled subscription keeps access until the end of the period the
+  // user already paid for (Dodo reports an immediate cancel as "cancelled").
   return subscriptions.findOne({
     clerkUserId,
-    status: { $in: ACTIVE_STATUSES },
+    $or: [
+      { status: { $in: ACTIVE_STATUSES } },
+      { status: "cancelled", currentPeriodEnd: { $gt: new Date() } },
+    ],
   });
 }
 

@@ -62,8 +62,10 @@ export default async function DashboardPage({
                 <span className="font-medium">{subscription.plan}</span> ·
                 Status:{" "}
                 <span className="font-medium">{subscription.status}</span>
-                {subscription.cancelAtNextBillingDate &&
-                  " (cancels at period end)"}
+                {subscription.status === "cancelled"
+                  ? ` · Access until ${subscription.currentPeriodEnd.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`
+                  : subscription.cancelAtNextBillingDate &&
+                    " (cancels at period end)"}
               </p>
               <form action={createBillingPortalSession} className="mt-4">
                 <button
