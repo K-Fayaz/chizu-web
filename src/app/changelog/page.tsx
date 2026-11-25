@@ -16,10 +16,10 @@ type Entry = {
 };
 
 // Newest first, kept short: one plain sentence per feature. Set the date of
-// the 0.1.0 entry on launch day (it's the first public release).
+// the 0.0.1 entry on launch day (it's the first public release).
 const entries: Entry[] = [
   {
-    version: "0.1.0",
+    version: "0.0.1",
     date: "Launching soon",
     latest: true,
     description: "The first public release of Chizu.",
